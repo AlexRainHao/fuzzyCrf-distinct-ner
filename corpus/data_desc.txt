@@ -1,0 +1,22 @@
+1. 数据来源
+    resume 数据
+
+2. 样本集
+    共 9695 句
+
+    非空共 9695 句
+
+3. 标签集（互斥唯一)
+    LOC ,  858
+    TITLE ,  1738
+    EDU ,  243
+
+4. 文件描述
+    * a) fusion.char -> 原resume数据，仅保留 EDU，TITLE
+    * b) demo.char.repred -> a)经过现有NER预测LOC
+    * c) random_distinct_dict.txt -> b)通过随机挑选互斥的关键词
+        -> LOC ,  324
+        -> TITLE ,  876
+        -> EDU ,  120
+    * d) mining_edu_dict.txt 以前挖掘到的EDU词典
+    * e) mining_title_dict.txt 以前挖掘到的TITLE词典

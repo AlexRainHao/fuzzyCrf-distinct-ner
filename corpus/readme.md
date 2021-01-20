@@ -1,6 +1,6 @@
 ## 1. 概述
 
-用于 fuzzy-lstm-crf 的验证
+用于 fuzzy-lstm-crf 的复现和验证
 
 模型特点是 无需任何标注， 仅靠词典进行训练
 
@@ -11,7 +11,6 @@
  * TITLE
  * EDU
  * 地区
- * 省份
 
 这些比较容易获得词典，从而得到有重叠的 entity mention
 
