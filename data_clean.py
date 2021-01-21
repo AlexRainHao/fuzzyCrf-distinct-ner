@@ -171,7 +171,7 @@ def random_select_sublabel_tokens(token_dict, use_seg_dict = {}):
         mining_token_dict[key] = list(set(random_sublabel_tokens(tokens,
                                                                  use_seg = use_seg_dict.get(key, False))))
         
-    with codecs.open("./corpus/random_distinct_dict.txt", "w", encoding = 'utf-8') as f:
+    with codecs.open("./corpus/random_distinct_dict_new.txt", "w", encoding = 'utf-8') as f:
         for label, tokens in mining_token_dict.items():
             for tk in tokens:
                 f.write(label + " " + tk + '\n')
@@ -180,10 +180,10 @@ def random_select_sublabel_tokens(token_dict, use_seg_dict = {}):
         print(key, ", ", len(tokens))
     
 
-# if __name__ == '__main__':
-#     lines = load_bio_file("./corpus/demo.char.repred")
-#     token_dict = get_sublabel_tokens(lines)
-#
-#     random_select_sublabel_tokens(token_dict, use_seg_dict = {"LOC": False,
-#                                                               "TITLE": True,
-#                                                               "EDU": True})
+if __name__ == '__main__':
+    lines = load_bio_file("./corpus/demo.char.repred")
+    token_dict = get_sublabel_tokens(lines)
+
+    random_select_sublabel_tokens(token_dict, use_seg_dict = {"LOC": False,
+                                                              "TITLE": True,
+                                                              "EDU": True})

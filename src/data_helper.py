@@ -21,6 +21,9 @@ class CaseExam():
         """pass"""
         return len(self.text) == 0
 
+    def len(self):
+        return len(self.text)
+
 def _save_examples(examples: List[CaseExam], filepath: Text):
     """pass"""
     with gzip.open(filepath, "wb") as f:
@@ -56,7 +59,7 @@ def convert_lines_to_case(lines):
     
     return examples
 
-def load_bio_file(filepath):
+def load_rowline_file(filepath):
     """读 bio bioes 数据"""
     with codecs.open(filepath, encoding="utf-8") as f:
         lines = f.read().splitlines()
@@ -69,7 +72,3 @@ def split_cv_dataset(examples: List[CaseExam], ratio = 0.7):
     random.shuffle(examples)
     
     return examples[:train_length], examples[train_length:]
-
-
-
-

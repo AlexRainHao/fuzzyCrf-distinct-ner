@@ -15,7 +15,7 @@
     * a) fusion.char -> 原resume数据，仅保留 EDU，TITLE
     * b) demo.char.repred -> a)经过现有NER预测LOC
     * c) random_distinct_dict.txt -> b)通过随机挑选互斥的关键词
-        -> LOC ,  324
+        -> LOC ,  359
         -> TITLE ,  876
         -> EDU ,  120
     * d) mining_edu_dict.txt 以前挖掘到的EDU词典
