@@ -86,6 +86,68 @@ class fuzzyCrfForwardCell(RNNCell):
         return transition_score, transition_score
 
 
+class CrfDecodeForwardRnnCell(RNNCell):
+
+    def __init__(self, transition):
+        self._transition = tf.expand_dims(transition, 0)
+        self._num_tags = tf.dimension_value(transition.shape[0])
+
+    @property
+    def state_size(self):
+        return self._num_tags
+
+    @property
+    def output_size(self):
+        return self._num_tags
+
+    def __call__(self, inputs, state, scope=None):
+        """pass"""
+        if state.dtype == tf.float64:
+            state = tf.cast(state, tf.float32)
+
+        if inputs.dtype == tf.float64:
+            inputs = tf.cast(inputs, tf.float32)
+
+        state = tf.expand_dims(state, 2) # [batch, num_tag, 1]
+
+        tran_score = state + self._transition
+        emi_state = inputs + tf.reduce_max(tran_score, [1]) # [batch, num_tag]
+
+        backpointer = tf.argmax(tran_score, axis = 1, output_type = tf.int32) # [batch, num_tag]
+
+        emi_state = tf.cast(emi_state, tf.float64)
+
+        return backpointer, emi_state
+
+
+class CrfDecodeBackwardRnnCell(RNNCell):
+
+    def __init__(self, num_tags):
+        self._num_tags = num_tags
+
+    @property
+    def state_size(self):
+        return 1
+
+    @property
+    def output_size(self):
+        return 1
+
+    def __call__(self, inputs, state, scope=None):
+        """pass"""
+
+        state = tf.squeeze(state, [1])
+        batch_size = tf.shape(inputs)[0]
+        b_indices = tf.range(batch_size)
+        indices = tf.stack([b_indices, state], axis = 1) # [batch ,2]
+        new_tags = tf.expand_dims(
+            tf.gather_nd(inputs, indices),
+            axis = -1
+        )
+
+        return new_tags, new_tags
+
+
 
 def crf_log_norm(inputs, sequence_lengths, transition_params):
     """Computes the normalization for a CRF.
